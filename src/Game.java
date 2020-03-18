@@ -233,69 +233,40 @@ public class Game
 	//Renders the gameboard
 	private static void renderGameBoard(Boolean[][] gameBoard, String[][] playerAnswers, int player) 
 	{
-		
-		if(playerCheck(player++) == false) 
+		for (int i = 0; i < gameBoard.length; i++) 
 		{
-			for (int i = 0; i < gameBoard.length; i++) 
+			for (int j = 0; j < gameBoard.length; j++) 
 			{
-				for (int j = 0; j < gameBoard.length; j++) 
+				if (gameBoard[i][j] == true)
 				{
-					if (gameBoard[i][j] == true)
-					{
-						System.out.print("[" + inputPlayer1(playerAnswers[i][j], playerAnswers, i, j) + "]");
-					}
-					else 
-					{
-						if (playerAnswers[i][j] == null)
-							System.out.print("[ ]");
-						else
-							System.out.print("[" + playerAnswers[i][j] + "]");
-					}	
+					System.out.print("[" + inputPlayer(playerAnswers[i][j], playerAnswers, i, j, player) + "]");
 				}
-				System.out.println();
-			}
-		}
-		else 
-		{
-			for (int i = 0; i < gameBoard.length; i++) 
-			{
-				for (int j = 0; j < gameBoard.length; j++) 
+				else 
 				{
-					if (gameBoard[i][j] == true)
-					{
-						System.out.print("[" + inputPlayer2(playerAnswers[i][j], playerAnswers, i, j) + "]");
-					}
-					else 
-					{
-						if (playerAnswers[i][j] == null)
-							System.out.print("[ ]");
-						else
-							System.out.print("[" + playerAnswers[i][j] + "]");
-					}	
-				}
-				System.out.println();
+					if (playerAnswers[i][j] == null)
+						System.out.print("[ ]");
+					else
+						System.out.print("[" + playerAnswers[i][j] + "]");
+				}	
 			}
+			System.out.println();
 		}
-		
 	}
+	
 
 	
 	
 	//Sets the corresponding character to the move the player has chosen
-	private static String inputPlayer1(String playerAnswer, String[][] playerAnswers, int i, int j) 
+	private static String inputPlayer(String playerAnswer, String[][] playerAnswers, int i, int j, int player) 
 	{
 		if (playerAnswer == null) 
-			playerAnswers[i][j] = "O";
-		
-			return playerAnswers[i][j];
-	}
-	
-	private static String inputPlayer2(String playerAnswer, String[][] playerAnswers, int i, int j) 
-	{
-		if (playerAnswer == null) 
-			playerAnswers[i][j] = "X";
-		
-			return playerAnswers[i][j];
+		{
+			if(playerCheck(player++) == false) 
+				playerAnswers[i][j] = "O";
+			else
+				playerAnswers[i][j] = "X";
+		}
+		return playerAnswers[i][j];
 	}
 
 }
