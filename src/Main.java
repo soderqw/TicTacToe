@@ -80,6 +80,8 @@ public class Main
 		
 		check(gameBoard, playerAnswers, player);
 		
+		gameLoop(gameBoard, playerAnswers, player);
+		
 		
 	}
 
@@ -90,35 +92,111 @@ public class Main
 	private static void check(Boolean[][] gameBoard, String[][] playerAnswers, int player) 
 	{
 		//HORIZONTAL
-		if (gameBoard[0][0] == true && gameBoard[0][1] == true && gameBoard[0][0] == true)
-			gameOver(player);
-		else if (gameBoard[1][0] == true && gameBoard[1][1] == true && gameBoard[1][0] == true)
-			gameOver(player);
-		else if (gameBoard[2][0] == true && gameBoard[2][1] == true && gameBoard[2][0] == true)
-			gameOver(player);
+		/*
+		 * [x][x][x]
+		 * [ ][ ][ ]
+		 * [ ][ ][ ]
+		 */
+		if (gameBoard[0][0] == true && gameBoard[0][1] == true && gameBoard[0][2] == true) 
+		{
+			if(playerAnswers[0][0].equals(playerAnswers[0][1]) && playerAnswers[0][1].equals(playerAnswers[0][2]))
+				gameOver(player);
+		}
+			
+		/*
+		 * [ ][ ][ ]
+		 * [x][x][x]
+		 * [ ][ ][ ]
+		 */
+		if (gameBoard[1][0] == true && gameBoard[1][1] == true && gameBoard[1][2] == true) 
+		{
+			if(playerAnswers[1][0].equals(playerAnswers[1][1]) && playerAnswers[1][1].equals(playerAnswers[1][2]))
+				gameOver(player);
+		}
+		
+		/*
+		 * [ ][ ][ ]
+		 * [ ][ ][ ]
+		 * [x][x][x]
+		 */
+		if (gameBoard[2][0] == true && gameBoard[2][1] == true && gameBoard[2][2] == true) 
+		{
+			if(playerAnswers[2][0].equals(playerAnswers[2][1]) && playerAnswers[2][1].equals(playerAnswers[2][2]))
+				gameOver(player);
+		}
+
+		
+		
+		
 		
 		//VERTICAL
-		else if (gameBoard[0][0] == true && gameBoard[1][0] == true && gameBoard[2][0] == true)
-			gameOver(player);
-		else if (gameBoard[0][1] == true && gameBoard[1][1] == true && gameBoard[2][1] == true)
-			gameOver(player);
-		else if (gameBoard[0][2] == true && gameBoard[1][2] == true && gameBoard[2][2] == true)
-			gameOver(player);
+		/*
+		 * [x][ ][ ]
+		 * [x][ ][ ]
+		 * [x][ ][ ]
+		 */
+		if (gameBoard[0][0] == true && gameBoard[1][0] == true && gameBoard[2][0] == true) 
+		{
+			if(playerAnswers[0][0].equals(playerAnswers[1][0]) && playerAnswers[1][0].equals(playerAnswers[2][0]))
+				gameOver(player);
+		}
+		
+		/*
+		 * [ ][x][ ]
+		 * [ ][x][ ]
+		 * [ ][x][ ]
+		 */
+		if (gameBoard[0][1] == true && gameBoard[1][1] == true && gameBoard[2][1] == true) 
+		{
+			if(playerAnswers[0][1].equals(playerAnswers[1][1]) && playerAnswers[1][1].equals(playerAnswers[2][1]))
+				gameOver(player);
+		}
+		
+		/*
+		 * [ ][ ][x]
+		 * [ ][ ][x]
+		 * [ ][ ][x]
+		 */
+		else if (gameBoard[0][2] == true && gameBoard[1][2] == true && gameBoard[2][2] == true) 
+		{
+			if(playerAnswers[0][2].equals(playerAnswers[1][2]) && playerAnswers[1][2].equals(playerAnswers[2][2]))
+				gameOver(player);
+		}
+		
+		
+		
+		
 		
 		//DIAGONAL
-		else if (gameBoard[0][0] == true && gameBoard[1][1] == true && gameBoard[2][2] == true)
-			gameOver(player);
-		else if (gameBoard[2][2] == true && gameBoard[1][1] == true && gameBoard[0][0] == true)
-			gameOver(player);
-		else
-			gameLoop(gameBoard, playerAnswers, player);
-				
+		/*
+		 * [x][ ][ ]
+		 * [ ][x][ ]
+		 * [ ][ ][x]
+		 */
+		if (gameBoard[0][0] == true && gameBoard[1][1] == true && gameBoard[2][2] == true) 
+		{
+			if(playerAnswers[0][0].equals(playerAnswers[1][1]) && playerAnswers[1][1].equals(playerAnswers[2][2]))
+				gameOver(player);
+		}
+
+		/*
+		 * [ ][ ][x]
+		 * [ ][x][ ]
+		 * [x][ ][ ]
+		 */
+		if (gameBoard[2][0] == true && gameBoard[1][1] == true && gameBoard[0][2] == true) 
+		{
+			if(playerAnswers[2][0].equals(playerAnswers[1][1]) && playerAnswers[1][1].equals(playerAnswers[0][2]))
+				gameOver(player);
+		}
 		
+		
+
 	}
 
 	private static void gameOver(int player) {
-		System.out.print("Game over");
-		
+		System.out.print("Game over, player " + ((player%2)+1) + " won");
+		System.exit(0); 
 	}
 
 	private static void updateGameBoard(Boolean[][] gameBoard, int i, int j) {
