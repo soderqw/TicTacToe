@@ -42,6 +42,9 @@ public class Main
 	 * GAME BOARD VISUAL REPRESENTATION
 	 * own method
 	 * 
+	 * FIXA
+	 * Vad händer om spelare 2 lägger på samma som spelare 1 och vice versa
+	 * 
 	 */
 	
 	public static void main(String [] args) 
@@ -67,12 +70,14 @@ public class Main
 	{
 		
 		if(playerCheck(player++) == false)
-			System.out.println("Player 1\nEnter row & column");
+			System.out.println("Player 1 - [X]\nEnter row & column [1,2,3]");
 		else
-			System.out.println("Player 2\nEnter row & column");
+			System.out.println("Player 2 - [O]\nEnter row & column [1,2,3]");
 		
-		int i = input.nextInt();
-		int j = input.nextInt();
+		int i = (input.nextInt()-1);
+		int j = (input.nextInt()-1);
+		
+		inputCheck(i,j, gameBoard, playerAnswers, player);
 		
 		updateGameBoard(gameBoard,i,j);
 		
@@ -83,6 +88,17 @@ public class Main
 		gameLoop(gameBoard, playerAnswers, player);
 		
 		
+	}
+	
+	
+	//Checks if input is valid, and if the desired move isnt already "taken".
+	private static void inputCheck(int i, int j, Boolean[][] gameBoard, String[][] playerAnswers, int player) {
+		if ((i > 2 || i < 0) || (j > 2 || j < 0) || gameBoard[i][j] == true) 
+		{
+			System.out.println("Try again");
+			player = player - 1;
+			gameLoop(gameBoard, playerAnswers, player);
+		}	
 	}
 
 	private static boolean playerCheck(int player) {
@@ -195,8 +211,15 @@ public class Main
 	}
 
 	private static void gameOver(int player) {
-		System.out.print("Game over, player " + ((player%2)+1) + " won");
-		System.exit(0); 
+		System.out.println("Game over, player " + ((player%2)+1) + " won\n\nPlay Again? (y/n)");
+		String s = input.next();
+		if(s.equals(("y"))) 
+			main(null);
+		else 
+		{
+			System.out.print("Thanks for playing");
+			System.exit(0); 
+		}
 	}
 
 	private static void updateGameBoard(Boolean[][] gameBoard, int i, int j) {
