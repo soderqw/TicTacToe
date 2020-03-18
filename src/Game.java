@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Game 
@@ -7,29 +8,75 @@ public class Game
 	//This is the main loop of the game, it loops until a winning condition is met
 	static void gameLoop(Boolean[][] gameBoard, String[][] playerAnswers, int player)
 	{
+		int i = 0, j = 0;
 		
 		if(playerCheck(player++) == false)
 			System.out.println("Player 1 - [X]\nEnter row & column [1,2,3]");
 		else
 			System.out.println("Player 2 - [O]\nEnter row & column [1,2,3]");
 		
-		int i = (input.nextInt()-1);
-		int j = (input.nextInt()-1);
+		try 
+		{
+			i = (input.nextInt()-1);
+			j = (input.nextInt()-1);
+			
+			inputCheck(i,j, gameBoard, playerAnswers, player);
+			
+			updateGameBoard(gameBoard,i,j);
+			
+			if(checkIfOver(gameBoard)) 
+			{
+				gameEven();
+			}
+				
+			
+			else 
+			{
+				renderGameBoard(gameBoard, playerAnswers, player);
+				
+				winCondition(gameBoard, playerAnswers, player);
+				
+				gameLoop(gameBoard, playerAnswers, player);
+			}
+		}
 		
-		inputCheck(i,j, gameBoard, playerAnswers, player);
-		
-		updateGameBoard(gameBoard,i,j);
-		
-		renderGameBoard(gameBoard, playerAnswers, player);
-		
-		winCondition(gameBoard, playerAnswers, player);
-		
-		gameLoop(gameBoard, playerAnswers, player);
-		
+		catch(Exception e)
+		{
+			System.err.println(e);
+		}	
 	}
 	
 	
 	
+	private static void gameEven() {
+		System.out.println("Tie game!\n\nPlay Again? (y/n)");
+		String s = input.next();
+		if(s.equals(("y"))) 
+			Main.main(null);
+		else 
+		{
+			System.out.print("Thanks for playing");
+			System.exit(0); 
+		}
+		
+	}
+
+
+
+	private static boolean checkIfOver(Boolean[][] gameBoard) {
+		for (int i = 0; i < gameBoard.length; i++) 
+		{
+			for (int j = 0; j < gameBoard.length; j++) 
+			{
+				if (gameBoard[i][j] != true)
+					return false;
+			}
+		}
+		return true;
+	}
+
+
+
 	//Checks if input is valid, and if the desired move isnt already "taken".
 	private static void inputCheck(int i, int j, Boolean[][] gameBoard, String[][] playerAnswers, int player) 
 	{
@@ -186,6 +233,7 @@ public class Game
 	//Renders the gameboard
 	private static void renderGameBoard(Boolean[][] gameBoard, String[][] playerAnswers, int player) 
 	{
+		
 		if(playerCheck(player++) == false) 
 		{
 			for (int i = 0; i < gameBoard.length; i++) 
