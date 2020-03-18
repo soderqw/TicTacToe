@@ -1,51 +1,13 @@
+/*
+ * Author: William Söderqvist
+ * Written: 18-3-2020
+ */
+
 import java.util.Scanner;
 
 public class Main 
 {
 	static Scanner input = new Scanner(System.in);
-	/*
-	 * ->	TIC-TAC-TOE	  <-
-	 * 
-	 * GAME LOOP
-	 * Render game board
-	 * Get user input (player 1)
-	 * Update game board
-	 * check for ending conditions
-	 * ---------------------------
-	 * Get user input (player 2)
-	 * Update game board
-	 * check for ending conditions
-	 * Render game board
-	 * Repeat this loop
-	 * 
-	 * 
-	 * 
-	 * 
-	 * USER INPUT
-	 * User enter row and column of desired move, then array updates position to true
-	 * 
-	 * 
-	 * 
-	 * 
-	 * ENDING CONDITION
-	 * three in a row, horizontal, vertical, diagonal.
-	 * 
-	 * 
-	 * 
-	 * 
-	 * GAME BOARD
-	 * 3 by 3 boolean array, gameBoard[i][j][k]
-	 * 
-	 * 
-	 * 
-	 * 
-	 * GAME BOARD VISUAL REPRESENTATION
-	 * own method
-	 * 
-	 * FIXA
-	 * Vad händer om spelare 2 lägger på samma som spelare 1 och vice versa
-	 * 
-	 */
 	
 	public static void main(String [] args) 
 	{
@@ -65,7 +27,9 @@ public class Main
 
 		
 	}
-
+	
+	
+	//This is the main loop of the game, it loops until a winning condition is met
 	private static void gameLoop(Boolean[][] gameBoard, String[][] playerAnswers, int player) 
 	{
 		
@@ -83,7 +47,7 @@ public class Main
 		
 		renderGameBoard(gameBoard, playerAnswers, player);
 		
-		check(gameBoard, playerAnswers, player);
+		winCondition(gameBoard, playerAnswers, player);
 		
 		gameLoop(gameBoard, playerAnswers, player);
 		
@@ -91,8 +55,10 @@ public class Main
 	}
 	
 	
+	
 	//Checks if input is valid, and if the desired move isnt already "taken".
-	private static void inputCheck(int i, int j, Boolean[][] gameBoard, String[][] playerAnswers, int player) {
+	private static void inputCheck(int i, int j, Boolean[][] gameBoard, String[][] playerAnswers, int player) 
+	{
 		if ((i > 2 || i < 0) || (j > 2 || j < 0) || gameBoard[i][j] == true) 
 		{
 			System.out.println("Try again");
@@ -101,11 +67,18 @@ public class Main
 		}	
 	}
 
-	private static boolean playerCheck(int player) {
-		return (player%2 == 0);	//False is odd=player 1
+	
+	
+	//This checks which player is currently playing
+	private static boolean playerCheck(int player) 
+	{
+		return (player%2 == 0);
 	}
 
-	private static void check(Boolean[][] gameBoard, String[][] playerAnswers, int player) 
+	
+	
+	//This checks for winning conditions, and ends game if one exists
+	private static void winCondition(Boolean[][] gameBoard, String[][] playerAnswers, int player) 
 	{
 		//HORIZONTAL
 		/*
@@ -210,7 +183,11 @@ public class Main
 
 	}
 
-	private static void gameOver(int player) {
+	
+	
+	//Games is over, and the user gets the option to replay the game
+	private static void gameOver(int player) 
+	{
 		System.out.println("Game over, player " + ((player%2)+1) + " won\n\nPlay Again? (y/n)");
 		String s = input.next();
 		if(s.equals(("y"))) 
@@ -222,10 +199,17 @@ public class Main
 		}
 	}
 
-	private static void updateGameBoard(Boolean[][] gameBoard, int i, int j) {
+	
+	
+	//Updates the game board with the player input
+	private static void updateGameBoard(Boolean[][] gameBoard, int i, int j) 
+	{
 		gameBoard[i][j] = true;	
 	}
 
+	
+	
+	//Renders the gameboard
 	private static void renderGameBoard(Boolean[][] gameBoard, String[][] playerAnswers, int player) 
 	{
 		if(playerCheck(player++) == false) 
@@ -236,7 +220,7 @@ public class Main
 				{
 					if (gameBoard[i][j] == true)
 					{
-						System.out.print("[" + player1(playerAnswers[i][j], playerAnswers, i, j) + "]");
+						System.out.print("[" + inputPlayer1(playerAnswers[i][j], playerAnswers, i, j) + "]");
 					}
 					else 
 					{
@@ -257,7 +241,7 @@ public class Main
 				{
 					if (gameBoard[i][j] == true)
 					{
-						System.out.print("[" + player2(playerAnswers[i][j], playerAnswers, i, j) + "]");
+						System.out.print("[" + inputPlayer2(playerAnswers[i][j], playerAnswers, i, j) + "]");
 					}
 					else 
 					{
@@ -273,14 +257,19 @@ public class Main
 		
 	}
 
-	private static String player1(String playerAnswer, String[][] playerAnswers, int i, int j) {
+	
+	
+	//Sets the corresponding character to the move the player has chosen
+	private static String inputPlayer1(String playerAnswer, String[][] playerAnswers, int i, int j) 
+	{
 		if (playerAnswer == null) 
 			playerAnswers[i][j] = "O";
 		
 			return playerAnswers[i][j];
 	}
 	
-	private static String player2(String playerAnswer, String[][] playerAnswers, int i, int j) {
+	private static String inputPlayer2(String playerAnswer, String[][] playerAnswers, int i, int j) 
+	{
 		if (playerAnswer == null) 
 			playerAnswers[i][j] = "X";
 		
